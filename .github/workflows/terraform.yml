@@ -30,6 +30,7 @@ jobs:
           terraform_version: 1.14.2
 
       - name: Terraform Init
+        working-directory: world
         run: |
           terraform init \
             -backend-config="bucket=${{ secrets.TF_STATE_BUCKET }}" \
@@ -37,8 +38,10 @@ jobs:
 
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
+        working-directory: world
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: world
         run: terraform apply -auto-approve
