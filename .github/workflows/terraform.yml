@@ -13,6 +13,8 @@ permissions:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_doppler_token: ${{ secrets.TF_VAR_DOPPLER_TOKEN }}
 
     steps:
       - name: Checkout
